@@ -51,6 +51,8 @@ CONF_DEVICE_MODE = "mode"
 CONF_DEVICE_CLIMATE = "climate"
 CONF_DEVICE_ROOM_HUMIDITY = "room_humidity"
 CONF_DEVICE_WATER_TEMPERATURE = "water_temperature"
+CONF_DEVICE_WATER_IN_TEMPERATURE = "water_in_temperature"
+CONF_DEVICE_WATER_OUT_TEMPERATURE = "water_out_temperature"
 CONF_DEVICE_INDOOR_CONSUMPTION = "indoor_power_consumption"
 CONF_DEVICE_CONSUMPTION = "power_consumption"
 CONF_DEVICE_ENERGY_CONSUMPTION = "energy_consumption"
@@ -234,6 +236,8 @@ DEVICE_SCHEMA = (
 
             # keep CUSTOM_SENSOR_KEYS in sync with these
             cv.Optional(CONF_DEVICE_WATER_TEMPERATURE): temperature_sensor_schema(0x4237),
+            cv.Optional(CONF_DEVICE_WATER_IN_TEMPERATURE): temperature_sensor_schema(0x4236),
+            cv.Optional(CONF_DEVICE_WATER_OUT_TEMPERATURE): temperature_sensor_schema(0x4238),
             cv.Optional(CONF_DEVICE_ROOM_HUMIDITY): humidity_sensor_schema(0x4038),
             cv.Optional(CONF_DEVICE_CONSUMPTION): consumption_sensor_schema(0x8413),
             cv.Optional(CONF_DEVICE_INDOOR_CONSUMPTION): consumption_sensor_schema(0x4284),
@@ -250,6 +254,8 @@ DEVICE_SCHEMA = (
 
 CUSTOM_SENSOR_KEYS = [
     CONF_DEVICE_WATER_TEMPERATURE,
+    CONF_DEVICE_WATER_IN_TEMPERATURE,
+    CONF_DEVICE_WATER_OUT_TEMPERATURE,
     CONF_DEVICE_ROOM_HUMIDITY,
     CONF_DEVICE_CONSUMPTION,
     CONF_DEVICE_ENERGY_CONSUMPTION,

@@ -9,7 +9,9 @@ esphome:
 
 # Select chipset and board configuration - in this case M5STACK
 esp32:
-  board: m5stack-atom
+  board: esp32-s3-devkitc-1
+  framework:
+  type: arduino
 
 # [Optional] - Create web interface where you can control the AC from your web browser (without Home Assistant)
 web_server:
@@ -36,8 +38,8 @@ captive_portal:
 
 # Specify pins used by the board to comunicate with RS485 board - in this case M5STACK
 uart:
-  tx_pin: GPIO19
-  rx_pin: GPIO22
+  tx_pin: GPIO06
+  rx_pin: GPIO05
   # For older devices it could also be 2400. But you should start with 9600.
   baud_rate: 9600
   parity: EVEN
@@ -46,7 +48,7 @@ uart:
 
 # Import custom component from GitHub
 external_components:
-  - source: github://lanwin/esphome_samsung_ac@stable # use @main if you want the latest development (possibly unstable?)
+  - source: github://ywteh/esphome_samsung_ac@main # use @main if you want the latest development (possibly unstable?)
     components: [samsung_ac]
 
 # Configuration of AC component
@@ -113,6 +115,10 @@ samsung_ac:
       # Only supported on NASA based heatpumps
       water_temperature:
         name: "Warm water"
+      water_in_temperature:
+        name: "Water in temperature"
+      water_out_temperature:
+        name: "Water out temperature"
       outdoor_temperature: # Should be used with outdoor device address
         name: "Outdoor temperature"
       power_consumption: # Should be used with outdoor device address
