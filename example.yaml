@@ -121,6 +121,10 @@ samsung_ac:
         name: "Water out temperature"
       outdoor_temperature: # Should be used with outdoor device address
         name: "Outdoor temperature"
+      flow_calc: # indoor
+        name: "Flow calc"
+      flow_voltage: # indoor
+        name: "Flow voltage"
       power_consumption: # Should be used with outdoor device address
         name: "Power consumption"
       energy_consumption: # Should be used with outdoor device address
