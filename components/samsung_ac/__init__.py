@@ -7,7 +7,7 @@ from esphome.core import (
     Lambda
 )
 
-CODEOWNERS = ["matthias882", "lanwin"]
+CODEOWNERS = ["matthias882", "lanwin", "ywteh"]
 DEPENDENCIES = ["uart"]
 AUTO_LOAD = ["sensor", "switch", "select", "number", "climate"]
 MULTI_CONF = False
@@ -54,6 +54,8 @@ CONF_DEVICE_WATER_TEMPERATURE = "water_temperature"
 CONF_DEVICE_WATER_IN_TEMPERATURE = "water_in_temperature"
 CONF_DEVICE_WATER_OUT_TEMPERATURE = "water_out_temperature"
 CONF_DEVICE_INDOOR_CONSUMPTION = "indoor_power_consumption"
+CONF_DEVICE_FLOW_CALC = "flow_calc"
+CONF_DEVICE_FLOW_VOLTAGE = "flow_voltage"
 CONF_DEVICE_CONSUMPTION = "power_consumption"
 CONF_DEVICE_ENERGY_CONSUMPTION = "energy_consumption"
 CONF_DEVICE_ENERGY_PRODUCED = "energy_produced"
@@ -175,6 +177,37 @@ def temperature_sensor_schema(message: int):
         ],
     )
 
+UNIT_LITRE_MINUTE = "L/m"
+DEVICE_CLASS_FLOW_CALC = "flow calc"
+DEVICE_CLASS_FLOW_VOLTAGE = "flow voltage"
+
+def flow_calc_sensor_schema(message: int):
+    return custom_sensor_schema(
+        message=message,
+        unit_of_measurement=UNIT_LITRE_MINUTE,
+        accuracy_decimals=1,
+        device_class=DEVICE_CLASS_FLOW_CALC,
+        state_class=STATE_CLASS_MEASUREMENT,
+        raw_filters=[
+            {"lambda": Lambda("return (int16_t)x;")},
+            {"multiply": 0.1}
+        ],
+    )
+
+def flow_voltage_sensor_schema(message: int):
+    return custom_sensor_schema(
+        message=message,
+        unit_of_measurement=UNIT_VOLT,
+        accuracy_decimals=1,
+        device_class=DEVICE_CLASS_FLOW_VOLTAGE,
+        state_class=STATE_CLASS_MEASUREMENT,
+        raw_filters=[
+            {"lambda": Lambda("return (int16_t)x;")},
+            {"multiply": 0.1}
+        ],
+    )
+
+
 
 def humidity_sensor_schema(message: int):
     return custom_sensor_schema(
@@ -238,6 +271,8 @@ DEVICE_SCHEMA = (
             cv.Optional(CONF_DEVICE_WATER_TEMPERATURE): temperature_sensor_schema(0x4237),
             cv.Optional(CONF_DEVICE_WATER_IN_TEMPERATURE): temperature_sensor_schema(0x4236),
             cv.Optional(CONF_DEVICE_WATER_OUT_TEMPERATURE): temperature_sensor_schema(0x4238),
+            cv.Optional(CONF_DEVICE_FLOW_CALC): flow_calc_sensor_schema(0x42E9),
+            cv.Optional(CONF_DEVICE_FLOW_VOLTAGE): flow_voltage_sensor_schema(0x42E8),
             cv.Optional(CONF_DEVICE_ROOM_HUMIDITY): humidity_sensor_schema(0x4038),
             cv.Optional(CONF_DEVICE_CONSUMPTION): consumption_sensor_schema(0x8413),
             cv.Optional(CONF_DEVICE_INDOOR_CONSUMPTION): consumption_sensor_schema(0x4284),

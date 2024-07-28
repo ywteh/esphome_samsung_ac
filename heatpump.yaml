@@ -1,0 +1,103 @@
+substitutions:
+  name: esphome-web-573c54
+  friendly_name: heat-pump-rs485
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  min_version: 2024.6.0
+  name_add_mac_suffix: false
+  platformio_options:
+    board_build.flash_mode: dio
+  project:
+    name: esphome.web
+    version: '1.0'
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+# Allow Over-The-Air updates
+ota:
+- platform: esphome
+
+# Allow provisioning Wi-Fi via serial
+improv_serial:
+
+wifi:
+  # Set up a wifi access point
+  ap: {}
+
+# In combination with the `ap` this allows the user
+# to provision wifi credentials to the device via WiFi AP.
+captive_portal:
+
+dashboard_import:
+  package_import_url: github://esphome/firmware/esphome-web/esp32s3.yaml@main
+  import_full_config: true
+
+# Sets up Bluetooth LE (Only on ESP32) to allow the user
+# to provision wifi credentials to the device.
+esp32_improv:
+  authorizer: none
+
+# To have a "next url" for improv serial
+web_server:
+  port: 80
+
+# Specify pins used by the board to comunicate with RS485 board - in this case M5STACK
+uart:
+  tx_pin: GPIO06
+  rx_pin: GPIO05
+  # For older devices it could also be 2400. But you should start with 9600.
+  baud_rate: 9600
+  parity: EVEN
+
+## SAMSUNG AC CONFIGURATION
+
+# Import custom component from GitHub
+external_components:
+  - source: github://ywteh/esphome_samsung_ac@main # use @main if you want the latest development (possibly unstable?)
+    components: [samsung_ac]
+    refresh: 1d
+
+# Configuration of AC component
+samsung_ac:
+  # With this row, all read data from the bus is printed on the terminal
+  debug_log_messages: true 
+
+  capabilities: {}
+
+  devices:
+    - address: "20.00.00" # Indoor device address 
+      room_temperature:
+        name: "Indoor temperature"
+      water_temperature:
+        name: "Warm water"
+      water_in_temperature:
+        name: "Water in temperature"
+      water_out_temperature:
+        name: "Water out temperature"
+      flow_calc: # indoor
+        name: "Flow calc"
+      flow_voltage: # indoor
+        name: "Flow voltage"
+
+    - address: "10.00.00" # Outdoor device address 
+      outdoor_temperature: # Should be used with outdoor device address
+        name: "Outdoor temperature"
+      power_consumption: # Should be used with outdoor device address
+        name: "Power consumption"
+      energy_consumption: # Should be used with outdoor device address
+        name: "Energy consumption"
+      energy_produced: # Indoor
+        name: "Energy Produced"
+
+
