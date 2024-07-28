@@ -66,7 +66,7 @@ uart:
 external_components:
   - source: github://ywteh/esphome_samsung_ac@main # use @main if you want the latest development (possibly unstable?)
     components: [samsung_ac]
-    refresh: 1d
+    refresh: 0s
 
 # Configuration of AC component
 samsung_ac:
@@ -80,7 +80,7 @@ samsung_ac:
       room_temperature:
         name: "Indoor temperature"
       water_temperature:
-        name: "Warm water"
+        name: "Water tank temperature"
       water_in_temperature:
         name: "Water in temperature"
       water_out_temperature:
@@ -89,6 +89,8 @@ samsung_ac:
         name: "Flow calc"
       flow_voltage: # indoor
         name: "Flow voltage"
+      energy_produced: # Indoor
+        name: "Energy Produced"
 
     - address: "10.00.00" # Outdoor device address 
       outdoor_temperature: # Should be used with outdoor device address
