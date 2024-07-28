@@ -178,15 +178,13 @@ def temperature_sensor_schema(message: int):
     )
 
 UNIT_LITRE_MINUTE = "L/m"
-DEVICE_CLASS_FLOW_CALC = "flow calc"
-DEVICE_CLASS_FLOW_VOLTAGE = "flow voltage"
 
 def flow_calc_sensor_schema(message: int):
     return custom_sensor_schema(
         message=message,
         unit_of_measurement=UNIT_LITRE_MINUTE,
         accuracy_decimals=1,
-        device_class=DEVICE_CLASS_FLOW_CALC,
+        device_class=DEVICE_CLASS_VOLUME_FLOW_RATE,
         state_class=STATE_CLASS_MEASUREMENT,
         raw_filters=[
             {"lambda": Lambda("return (int16_t)x;")},
@@ -199,7 +197,7 @@ def flow_voltage_sensor_schema(message: int):
         message=message,
         unit_of_measurement=UNIT_VOLT,
         accuracy_decimals=1,
-        device_class=DEVICE_CLASS_FLOW_VOLTAGE,
+        device_class=DEVICE_CLASS_VOLTAGE,
         state_class=STATE_CLASS_MEASUREMENT,
         raw_filters=[
             {"lambda": Lambda("return (int16_t)x;")},
