@@ -249,8 +249,8 @@ DEVICE_SCHEMA = (
             cv.Optional(CONF_DEVICE_WATER_IN_TEMPERATURE): temperature_sensor_schema(0x4236),
             cv.Optional(CONF_DEVICE_WATER_OUT_TEMPERATURE): temperature_sensor_schema(0x4238),
             cv.Optional(CONF_DEVICE_FLOW): flow_sensor_schema(0x42e9),
-            cv.Optional(CONF_DEVICE_POWER_CONSUMED): consumption_sensor_schema(0x8413),
-            cv.Optional(CONF_DEVICE_INDOOR_POWER_CONSUMED): consumption_sensor_schema(0x4284),
+            cv.Optional(CONF_DEVICE_POWER_CONSUMED): power_sensor_schema(0x8413),
+            cv.Optional(CONF_DEVICE_INDOOR_POWER_CONSUMED): power_sensor_schema(0x4284),
             cv.Optional(CONF_DEVICE_ENERGY_CONSUMED): energy_sensor_schema(0x8414),
             cv.Optional(CONF_DEVICE_ENERGY_PRODUCED): energy_sensor_schema(0x4427),
 
