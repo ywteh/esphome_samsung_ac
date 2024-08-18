@@ -14,6 +14,8 @@ from esphome.const import (
     CONF_FILTERS,
     UNIT_CELSIUS,
     UNIT_PERCENT,
+    UNIT_KILOWATT,
+    UNIT_KILOWATT_HOURS,
 )
 from esphome.core import (
     CORE,
