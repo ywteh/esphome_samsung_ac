@@ -66,6 +66,14 @@ CONF_DEVICE_MODE = "mode"
 CONF_DEVICE_WATER_HEATER_MODE = "water_heater_mode"
 CONF_DEVICE_CLIMATE = "climate"
 CONF_DEVICE_ROOM_HUMIDITY = "room_humidity"
+CONF_DEVICE_WATER_IN_TEMPERATURE = "water_in_temperature"
+CONF_DEVICE_WATER_OUT_TEMPERATURE = "water_out_temperature"
+CONF_DEVICE_FLOW = "flow"
+CONF_DEVICE_POWER_CONSUMED = "power_consumed"
+CONF_DEVICE_INDOOR_POWER_CONSUMED = "indoor_power_consumed"
+CONF_DEVICE_ENERGY_CONSUMED = "energy_consumed"
+CONF_DEVICE_ENERGY_PRODUCED = "energy_produced"
+
 CONF_DEVICE_CUSTOM = "custom_sensor"
 CONF_DEVICE_CUSTOM_MESSAGE = "message"
 CONF_DEVICE_CUSTOM_RAW_FILTERS = "raw_filters"
@@ -163,6 +171,45 @@ def humidity_sensor_schema(message: int):
         state_class=STATE_CLASS_MEASUREMENT,
     )
 
+UNIT_LITRE_MINUTE = "L/min"
+
+def flow_sensor_schema(message: int):
+    return custom_sensor_schema( 
+        message=message,
+        unit_of_measurement=UNIT_LITRE_MINUTE,
+        accuracy_decimals=1,
+        device_class=DEVICE_CLASS_VOLUME_FLOW_RATE,
+        state_class=STATE_CLASS_MEASUREMENT,
+        raw_filters=[
+            {"lambda": Lambda("return (int16_t)x;")},
+            {"multiply": 0.1}
+        ],
+    )
+
+def power_sensor_schema(message: int):
+    return custom_sensor_schema(
+        message=message,
+        unit_of_measurement=UNIT_KILOWATT,
+        accuracy_decimals=3,
+        device_class=DEVICE_CLASS_POWER,
+        state_class=STATE_CLASS_MEASUREMENT,
+        raw_filters=[
+            {"multiply": 0.001}
+        ],
+    )
+
+
+def energy_sensor_schema(message: int):
+    return custom_sensor_schema(
+        message=message,
+        unit_of_measurement=UNIT_KILOWATT_HOURS,
+        accuracy_decimals=3,
+        device_class=DEVICE_CLASS_ENERGY,
+        state_class=STATE_CLASS_TOTAL_INCREASING,
+        raw_filters=[
+            {"multiply": 0.001}
+        ],
+    )
 
 DEVICE_SCHEMA = (
     cv.Schema(
@@ -196,6 +243,14 @@ DEVICE_SCHEMA = (
             # keep CUSTOM_SENSOR_KEYS in sync with these
             cv.Optional(CONF_DEVICE_WATER_TEMPERATURE): temperature_sensor_schema(0x4237),
             cv.Optional(CONF_DEVICE_ROOM_HUMIDITY): humidity_sensor_schema(0x4038),
+            cv.Optional(CONF_DEVICE_WATER_IN_TEMPERATURE): temperature_sensor_schema(0x4236),
+            cv.Optional(CONF_DEVICE_WATER_OUT_TEMPERATURE): temperature_sensor_schema(0x4238),
+            cv.Optional(CONF_DEVICE_FLOW): flow_sensor_schema(0x42e9),
+            cv.Optional(CONF_DEVICE_POWER_CONSUMED): consumption_sensor_schema(0x8413),
+            cv.Optional(CONF_DEVICE_INDOOR_POWER_CONSUMED): consumption_sensor_schema(0x4284),
+            cv.Optional(CONF_DEVICE_ENERGY_CONSUMED): energy_sensor_schema(0x8414),
+            cv.Optional(CONF_DEVICE_ENERGY_PRODUCED): energy_sensor_schema(0x4427),
+
         }
     )
 )
@@ -203,6 +258,14 @@ DEVICE_SCHEMA = (
 CUSTOM_SENSOR_KEYS = [
     CONF_DEVICE_WATER_TEMPERATURE,
     CONF_DEVICE_ROOM_HUMIDITY,
+    CONF_DEVICE_WATER_IN_TEMPERATURE,
+    CONF_DEVICE_WATER_OUT_TEMPERATURE,
+    CONF_DEVICE_FLOW,
+    CONF_DEVICE_FLOW_VOLTAGE,
+    CONF_DEVICE_POWER_CONSUMED,
+    CONF_DEVICE_INDOOR_POWER_CONSUMED,
+    CONF_DEVICE_ENERGY_CONSUMED,
+    CONF_DEVICE_ENERGY_PRODUCED,
 ]
 
 CONF_DEVICES = "devices"
