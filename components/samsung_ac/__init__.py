@@ -4,8 +4,11 @@ from esphome.components import uart, sensor, switch, select, number, climate
 from esphome.const import (
     CONF_ID,
     DEVICE_CLASS_TEMPERATURE,
-    STATE_CLASS_MEASUREMENT,
+    DEVICE_CLASS_VOLUME_FLOW_RATE,
+    DEVICE_CLASS_POWER,
+    DEVICE_CLASS_ENERGY,
     DEVICE_CLASS_HUMIDITY,
+    STATE_CLASS_MEASUREMENT,
     CONF_UNIT_OF_MEASUREMENT,
     CONF_DEVICE_CLASS,
     CONF_FILTERS,
