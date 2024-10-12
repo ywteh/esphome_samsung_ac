@@ -82,6 +82,8 @@ namespace esphome
             virtual void set_water_outlet_target(const std::string address, float value) = 0;
             virtual void set_outdoor_temperature(const std::string address, float value) = 0;
             virtual void set_target_water_temperature(const std::string address, float value) = 0;
+            virtual void set_water_law_hi_temp(const std::string address, float value) = 0;
+            virtual void set_water_law_lo_temp(const std::string address, float value) = 0;
             virtual void set_mode(const std::string address, Mode mode) = 0;
             virtual void set_water_heater_mode(const std::string address, WaterHeaterMode waterheatermode) = 0;
             virtual void set_fanmode(const std::string address, FanMode fanmode) = 0;
@@ -102,6 +104,8 @@ namespace esphome
             optional<float> target_temp;
             optional<float> water_outlet_target;
             optional<float> target_water_temp;
+            optional<float> water_law_hi_temp;
+            optional<float> water_law_lo_temp;
             optional<FanMode> fan_mode;
             optional<SwingMode> swing_mode;
             optional<AltMode> alt_mode;

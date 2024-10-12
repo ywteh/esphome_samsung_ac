@@ -108,6 +108,8 @@ namespace esphome
       Samsung_AC_Number *target_temperature{nullptr};
       Samsung_AC_Number *water_outlet_target{nullptr};
       Samsung_AC_Number *target_water_temperature{nullptr};
+      Samsung_AC_Number *water_law_hi_temp{nullptr};
+      Samsung_AC_Number *water_law_lo_temp{nullptr};
       Samsung_AC_Switch *power{nullptr};
       Samsung_AC_Switch *water_heater_power{nullptr};
       Samsung_AC_Mode_Select *mode{nullptr};
@@ -219,6 +221,30 @@ namespace esphome
         };
       };
 
+      void set_water_law_hi_temp_number(Samsung_AC_Number *number)
+      {
+        water_law_hi_temp = number;
+        water_law_hi_temp->write_state_ = [this](float value)
+        {
+          ProtocolRequest request;
+          request.water_law_hi_temp = value;
+          publish_request(request);
+        };
+      };
+
+      void set_water_law_lo_temp_number(Samsung_AC_Number *number)
+      {
+        water_law_lo_temp = number;
+        water_law_lo_temp->write_state_ = [this](float value)
+        {
+          ProtocolRequest request;
+          request.water_law_lo_temp = value;
+          publish_request(request);
+        };
+      };
+
+
+
       void set_climate(Samsung_AC_Climate *value)
       {
         climate = value;
@@ -242,11 +268,17 @@ namespace esphome
           water_outlet_target->publish_state(value);
       }
 
-      void update_target_water_temperature(float value)
+      void update_water_law_hi_temp(float value)
       {
-        if (target_water_temperature != nullptr)
-          target_water_temperature->publish_state(value);
+        if (water_law_hi_temp != nullptr)
+          water_law_hi_temp->publish_state(value);
       }
+      void update_water_law_lo_temp(float value)
+      {
+        if (water_law_lo_temp != nullptr)
+          water_law_lo_temp->publish_state(value);
+      }
+
 
       optional<bool> _cur_power;
       optional<bool> _cur_water_heater_power;

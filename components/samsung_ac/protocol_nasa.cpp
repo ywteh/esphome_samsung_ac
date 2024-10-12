@@ -424,6 +424,21 @@ namespace esphome
                 packet.messages.push_back(targetwatertemp);
             }
 
+            if (request.water_law_hi_temp)
+            {
+                MessageSet waterlawhitemp(MessageNumber::VAR_in_temp_water_law_hi_temp_f);
+                waterlawhitemp.value = request.water_law_hi_temp.value() * 10.0;
+                packet.messages.push_back(waterlawhitemp);
+            }
+
+            if (request.water_law_lo_temp)
+            {
+                MessageSet waterlawlotemp(MessageNumber::VAR_in_temp_water_law_lo_temp_f);
+                waterlawlotemp.value = request.water_law_lo_temp.value() * 10.0;
+                packet.messages.push_back(waterlawlotemp);
+            }
+
+
             if (request.fan_mode)
             {
                 MessageSet fanmode(MessageNumber::ENUM_in_fan_mode);
@@ -582,6 +597,21 @@ namespace esphome
                 target->set_target_water_temperature(source, temp);
                 return;
             }
+            case MessageNumber::VAR_in_water_law_hi_temp_f: // unit = 'Celsius' from XML
+            {
+                double temp = (double)message.value / (double)10;
+                ESP_LOGW(TAG, "s:%s d:%s VAR_in_water_law_hi_temp_f %f", source.c_str(), dest.c_str(), temp);
+                target->set_water_law_hi_temp(source, temp);
+                return;
+            }
+            case MessageNumber::VAR_in_water_law_lo_temp_f: // unit = 'Celsius' from XML
+            {
+                double temp = (double)message.value / (double)10;
+                ESP_LOGW(TAG, "s:%s d:%s VAR_in_water_law_lo_temp_f %f", source.c_str(), dest.c_str(), temp);
+                target->set_water_law_lo_temp(source, temp);
+                return;
+            }
+ 
             case MessageNumber::ENUM_in_state_humidity_percent:
             {
                 // XML Enum no value but in Code it adds unit

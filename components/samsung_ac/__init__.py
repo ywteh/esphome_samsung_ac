@@ -23,7 +23,7 @@ from esphome.core import (
     Lambda
 )
 
-CODEOWNERS = ["matthias882", "lanwin"]
+CODEOWNERS = ["matthias882", "lanwin", "ywteh"]
 DEPENDENCIES = ["uart"]
 AUTO_LOAD = ["sensor", "switch", "select", "number", "climate"]
 MULTI_CONF = False
@@ -79,6 +79,8 @@ CONF_DEVICE_POWER_CONSUMED = "power_consumed"
 CONF_DEVICE_INDOOR_POWER_CONSUMED = "indoor_power_consumed"
 CONF_DEVICE_ENERGY_CONSUMED = "energy_consumed"
 CONF_DEVICE_ENERGY_PRODUCED = "energy_produced"
+CONF_DEVICE_WATER_LAW_HI_TEMP = "water_law_hi_temp"
+CONF_DEVICE_WATER_LAW_LO_TEMP = "water_law_lo_temp"
 
 CONF_DEVICE_CUSTOM = "custom_sensor"
 CONF_DEVICE_CUSTOM_MESSAGE = "message"
@@ -239,6 +241,8 @@ DEVICE_SCHEMA = (
             cv.Optional(CONF_DEVICE_TARGET_TEMPERATURE): NUMBER_SCHEMA,
             cv.Optional(CONF_DEVICE_WATER_OUTLET_TARGET): NUMBER_SCHEMA,
             cv.Optional(CONF_DEVICE_WATER_TARGET_TEMPERATURE): NUMBER_SCHEMA,
+            cv.Optional(CONF_DEVICE_WATER_LAW_HI_TEMP): NUMBER_SCHEMA,
+            cv.Optional(CONF_DEVICE_WATER_LAW_LO_TEMP): NUMBER_SCHEMA,
             cv.Optional(CONF_DEVICE_POWER): switch.switch_schema(Samsung_AC_Switch),
             cv.Optional(CONF_DEVICE_WATER_HEATER_POWER): switch.switch_schema(Samsung_AC_Switch),
             cv.Optional(CONF_DEVICE_MODE): SELECT_MODE_SCHEMA,
@@ -396,6 +400,28 @@ async def to_code(config):
                                           max_value=70.0,
                                           step=0.5)
             cg.add(var_dev.set_target_water_temperature_number(num))
+
+        if CONF_DEVICE_WATER_LAW_HI_TEMP in device:
+            conf = device[CONF_DEVICE_WATER_LAW_HI_TEMP]
+            conf[CONF_UNIT_OF_MEASUREMENT] = UNIT_CELSIUS
+            conf[CONF_DEVICE_CLASS] = DEVICE_CLASS_TEMPERATURE
+            num = await number.new_number(conf,
+                                          min_value=30.0,
+                                          max_value=50.0,
+                                          step=0.5)
+            cg.add(var_dev.set_water_law_hi_temp_number(num))
+
+        if CONF_DEVICE_WATER_LAW_LO_TEMP in device:
+            conf = device[CONF_DEVICE_WATER_LAW_LO_TEMP]
+            conf[CONF_UNIT_OF_MEASUREMENT] = UNIT_CELSIUS
+            conf[CONF_DEVICE_CLASS] = DEVICE_CLASS_TEMPERATURE
+            num = await number.new_number(conf,
+                                          min_value=30.0,
+                                          max_value=50.0,
+                                          step=0.5)
+            cg.add(var_dev.set_water_law_lo_temp_number(num))
+
+
 
         if CONF_DEVICE_TARGET_TEMPERATURE in device:
             conf = device[CONF_DEVICE_TARGET_TEMPERATURE]

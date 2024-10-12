@@ -100,6 +100,20 @@ namespace esphome
         if (dev != nullptr)
           dev->update_target_water_temperature(value);
       }
+      void /*MessageTarget::*/ set_water_law_hi_temp(const std::string address, float value) override
+      {
+        Samsung_AC_Device *dev = find_device(address);
+        if (dev != nullptr)
+          dev->update_water_law_hi_temp(value);
+      }
+      void /*MessageTarget::*/ set_water_law_lo_temp(const std::string address, float value) override
+      {
+        Samsung_AC_Device *dev = find_device(address);
+        if (dev != nullptr)
+          dev->update_water_law_lo_temp(value);
+      }
+
+
 
       void /*MessageTarget::*/ set_power(const std::string address, bool value) override
       {

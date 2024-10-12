@@ -44,6 +44,10 @@ wifi:
 
 captive_portal:
 
+dashboard_import:
+  package_import_url: github://esphome/firmware/esphome-web/esp32s3.yaml@main
+  import_full_config: true
+
 # Specify pins used by the board to comunicate with RS485 board - in this case M5STACK
 uart:
   tx_pin: GPIO06   # Use GPIO26 for ATOM Tail485 
@@ -58,7 +62,7 @@ uart:
 external_components:
   - source: github://ywteh/esphome_samsung_ac@main 
     components: [samsung_ac]
-    refresh: 1d
+    refresh: 1s
 
 # Configuration of AC component
 samsung_ac:
@@ -97,17 +101,17 @@ samsung_ac:
 
       # The controls directly below are all included in the climate control. Its adviced to only add the climate control and skip the extra controls.
       room_temperature:
-        name: "Indoor temperature"
-      target_temperature:
-        name: "Indoor target temperature"
+        name: "Garage temperature"
+      # target_temperature:
+      #   name: "Indoor target temperature"
       power:
-        name: "Indoor power"
-      mode:
-        name: "Indoor mode"
+        name: "Heating switch"
+      # mode:
+      #   name: "Indoor mode"
 
       # If your AC sits near or inside the ceiling, the reported room temperature is often a little bit heigher then whats 
       # measured below. This property can be used to correct that value.
-      room_temperature_offset: -1.4
+      room_temperature_offset: 0.0
 
       # Only supported on NASA devices
       # room_humidity:
@@ -115,22 +119,31 @@ samsung_ac:
 
       # Only supported on NASA based heatpumps
       water_temperature:
-        name: "Water tank temperature"
+        name: "Hot water tank temperature"
       water_target_temperature:
-        name: "Water tank target temperature"
+        name: "Hot water target temperature"
+      water_heater_power:
+        name: "Hot water switch"
       water_heater_mode:
-        name: "Domestic hot water mode"
+        name: "Hot water mode"
+
+      # heatpump operating status
       water_in_temperature:
         name: "Water in temperature"
       water_out_temperature:
         name: "Water out temperature"
+      water_law_hi_temp:
+        name: "Water law high temperature"
+      water_law_lo_temp:
+        name: "Water law low temperature"
+ 
       flow: # indoor
         name: "Flow"
       energy_produced: # Indoor
         name: "Energy Produced"
       # power_produced: # Indoor
       #   name: "Power Produced"
-      indoor_power_consumed: # Should be used with outdoor device address
+      indoor_power_consumed: 
         name: "Indoor power consumed"
 
     - address: "10.00.00" # Outdoor device address 
