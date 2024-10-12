@@ -268,6 +268,12 @@ namespace esphome
           water_outlet_target->publish_state(value);
       }
 
+      void update_water_target_temperature(float value)
+      {
+        if (water_target_temperature != nullptr)
+          water_target_temperature->publish_state(value);
+      }
+ 
       void update_water_law_hi_temp(float value)
       {
         if (water_law_hi_temp != nullptr)
