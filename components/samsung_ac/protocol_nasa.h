@@ -86,8 +86,8 @@ namespace esphome
             VAR_in_temp_water_tank_f = 0x4237,
             VAR_out_sensor_airout = 0x8204,
             VAR_in_temp_water_heater_target_f = 0x4235,
-            VAR_in_temp_water_law_hi_temp_f = 0x4257,
-            VAR_in_temp_water_law_lo_temp_f = 0x4256,
+            VAR_in_water_law_hi_temp_f = 0x4257,
+            VAR_in_water_law_lo_temp_f = 0x4256,
         };
 
         struct Address
