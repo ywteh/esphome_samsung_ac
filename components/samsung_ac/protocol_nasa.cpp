@@ -711,6 +711,21 @@ namespace esphome
                     ESP_LOGW(TAG, "s:%s d:%s VAR_IN_FSV_3022 %f", source.c_str(), dest.c_str(), temp);
                     return;
                 }
+                if ((uint16_t)message.messageNumber == 0x4256)
+                {
+                    // VAR_IN_FSV_2021
+                    double temp = (double)message.value / (double)10;
+                    ESP_LOGW(TAG, "s:%s d:%s VAR_IN_FSV_2021 %f", source.c_str(), dest.c_str(), temp);
+                    return;
+                }
+                if ((uint16_t)message.messageNumber == 0x4257)
+                {
+                    // VAR_IN_FSV_2022
+                    double temp = (double)message.value / (double)10;
+                    ESP_LOGW(TAG, "s:%s d:%s VAR_IN_FSV_2022 %f", source.c_str(), dest.c_str(), temp);
+                    return;
+                }
+ 
                 if ((uint16_t)message.messageNumber == 0x4262)
                 {
                     // VAR_IN_FSV_3023
