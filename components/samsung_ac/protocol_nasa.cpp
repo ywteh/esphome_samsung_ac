@@ -426,14 +426,14 @@ namespace esphome
 
             if (request.water_law_hi_temp)
             {
-                MessageSet waterlawhitemp(MessageNumber::VAR_in_temp_water_law_hi_temp_f);
+                MessageSet waterlawhitemp(MessageNumber::VAR_in_water_law_hi_temp_f);
                 waterlawhitemp.value = request.water_law_hi_temp.value() * 10.0;
                 packet.messages.push_back(waterlawhitemp);
             }
 
             if (request.water_law_lo_temp)
             {
-                MessageSet waterlawlotemp(MessageNumber::VAR_in_temp_water_law_lo_temp_f);
+                MessageSet waterlawlotemp(MessageNumber::VAR_in_water_law_lo_temp_f);
                 waterlawlotemp.value = request.water_law_lo_temp.value() * 10.0;
                 packet.messages.push_back(waterlawlotemp);
             }
