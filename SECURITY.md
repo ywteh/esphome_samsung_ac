@@ -34,6 +34,5 @@ If you discover a security vulnerability in the project, please follow these ste
 
 Security updates will be made available via:
 - [GitHub Releases](https://github.com/lanwin/esphome_samsung_hvac_bus/releases)
-- [Project Change Log](https://github.com/lanwin/esphome_samsung_hvac_bus/CHANGELOG.md)
 
 We recommend that all users regularly check for updates and upgrade to the latest secure version.
