@@ -38,12 +38,12 @@ This Blueprint adds a new layer of functionality to your Home Assistant setup, a
 ## Compatibility
 In general, all devices with dedicated communication wires (not only power) should work. If you want to be safe when buying a new AC, then just ask for NASA support.
 
-To automatically check the classification of your Samsung AC model (NASA, Non-NASA, or Other), use our [Samsung AC Model Checker](https://lanwin.github.io/esphome_samsung_hvac_bus/model-checker/index.html).  
-[![image](https://github.com/user-attachments/assets/35ca18dc-4025-4783-bfc8-3b8112774436)](https://lanwin.github.io/esphome_samsung_hvac_bus/model-checker/index.html)
+To automatically check the classification of your Samsung AC model (NASA, Non-NASA, or Other), use our [Samsung AC Model Checker](http://git.samsung-hvac.aran.net.tr/model-checker/).  
+[![image](https://github.com/user-attachments/assets/8b237bb5-ebbd-492a-921a-f46f6315fe5e)](http://git.samsung-hvac.aran.net.tr/model-checker/)
 
-[@hnykda](https://github.com/hnykda) found a way to decode Samsung's product numbers. For more info, see [this issue](https://github.com/lanwin/esphome_samsung_hvac_bus/issues/101#issuecomment-2098206070).
+[@hnykda](https://github.com/hnykda) found a way to decode Samsung's product numbers. For more info, see [this issue](https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/issues/101#issuecomment-2098206070).
 
-There are also two Discussion threads about confirmed [NASA](https://github.com/lanwin/esphome_samsung_hvac_bus/discussions/82) and [NonNASA](https://github.com/lanwin/esphome_samsung_hvac_bus/discussions/78) uses. If you made this working on a model that has not been confirmed yet, please do so in there!
+There are also two Discussion threads about confirmed [NASA](https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/discussions/82) and [NonNASA](https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/discussions/78) uses. If you made this working on a model that has not been confirmed yet, please do so in there!
 
 ### Known to work (not exhaustive)
 
@@ -67,7 +67,7 @@ An ESPHome compatible device and an RS-485 to (TTL) serial adapter is required t
 
 It's cheap, comes with a tiny case (which can fit inside an indoor unit) and allows direct use of the 12V comming from the V1/V2 lines which some AC units provide.
 
-> If your AC did not has V1/V2 please check out this [post](https://github.com/lanwin/esphome_samsung_hvac_bus/discussions/39#discussioncomment-8383733).
+> If your AC did not has V1/V2 please check out this [post](https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/discussions/39#discussioncomment-8383733).
 
 1. Purchase the following components and stack them:
 
@@ -80,7 +80,7 @@ It's cheap, comes with a tiny case (which can fit inside an indoor unit) and all
    - Connect V1 on the AC unit to DC on the M5STACK controller.
    - Connect V2 on the AC unit to G on the M5STACK controller.
 
-<img alt='M5STACK Wiring Diagram' src='https://github.com/lanwin/esphome_samsung_hvac_bus/assets/32042186/42a6757d-bfcf-4a29-be87-cf1b204e248a' width='400'>
+<img alt='M5STACK Wiring Diagram' src='https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/assets/32042186/42a6757d-bfcf-4a29-be87-cf1b204e248a' width='400'>
 
 ## Software Installation
 
@@ -89,7 +89,7 @@ Follow these steps to install and configure the software for your AC unit contro
 1. **Create a New ESPHome Device:**
 
    - Begin by creating a new ESPHome device in your Home Assistant instance or ESPHome command line tool.
-   - Use the configuration from [example.yaml](https://github.com/lanwin/esphome_samsung_hvac_bus/blob/main/example.yaml) file as a template and copy over the `api` and `ota` sections from the newly created YAML.
+   - Use the configuration from [example.yaml](https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/main/example.yaml) file as a template and copy over the `api` and `ota` sections from the newly created YAML.
 
 1. **Deploy and Boot:**
 
@@ -190,21 +190,24 @@ Thanks goes to matthias882 https://github.com/matthias882/some_esphome_component
 
 This project exists thanks to all the people who contribute. We welcome contributions from everyone!
 
-### Special Thanks
-- **lanwin** (Project Owner) - [Profile](https://github.com/lanwin)
-- **omerfaruk-aran** - [Profile](https://github.com/omerfaruk-aran)
+### Special Recognition
+- **Steve Wagner (lanwin)** - *Project Founder & Initial Developer* - [Profile](https://github.com/lanwin)  
+  A huge thank you to Steve Wagner for creating and laying the foundation for this project. His vision and dedication have shaped this project from the start. 🚀
+
+### Current Maintainers
+- **Ömer Faruk ARAN (omerfaruk-aran)** - *Current Maintainer & Lead Developer* - [Profile](https://github.com/omerfaruk-aran)
 - **north3221** - [Profile](https://github.com/north3221)
 - **matthias882** - [Profile](https://github.com/matthias882)
 
 ### Other Contributors
-- See the full list of contributors [here](https://github.com/lanwin/esphome_samsung_hvac_bus/graphs/contributors).
+- See the full list of contributors [here](https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/graphs/contributors).
 
-Thank you to everyone who has contributed to this project!
+Thank you to everyone who has contributed to this project! 💡✨
 
 ---
 
 ## Want to Contribute?
 
-We welcome new contributors! If you would like to help improve this project, please review our [CONTRIBUTING.md](https://github.com/lanwin/esphome_samsung_hvac_bus/blob/main/CONTRIBUTING.md) for guidelines on how to get started.
+We welcome new contributors! If you would like to help improve this project, please review our [CONTRIBUTING.md](https://github.com/omerfaruk-aran/esphome_samsung_hvac_bus/blob/main/CONTRIBUTING.md) for guidelines on how to get started.
 
 Your contributions, whether through code, documentation, or bug reports, are all greatly appreciated!
