@@ -162,4 +162,3 @@ samsung_ac:
         name: "Hotwater Mode"
       outdoor_temperature: # Should be used with outdoor device address
         name: "Outdoor temperature"
-
