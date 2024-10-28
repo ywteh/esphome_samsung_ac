@@ -2,7 +2,7 @@ function checkModel() {
     const model = document.getElementById("modelInput").value.toUpperCase();
     const result = document.getElementById("result");
 
-    if (model.length < 10) {
+    if (model.length < 9) {
         result.textContent = "Please enter a valid model number.";
         return;
     }
