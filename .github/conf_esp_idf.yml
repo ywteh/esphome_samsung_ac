@@ -19,6 +19,11 @@ uart:
   parity: EVEN
 
 samsung_ac:
+  debug_mqtt_host: 192.168.1.100
+  debug_mqtt_port: 1883
+  debug_mqtt_username: mqtt_user
+  debug_mqtt_password: mqtt_pass
+
   debug_log_messages: false
   debug_log_messages_raw: false
 
