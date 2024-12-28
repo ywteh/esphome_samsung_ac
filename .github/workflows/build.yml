@@ -35,6 +35,12 @@ jobs:
     runs-on: ubuntu-latest     
     steps:
     - uses: actions/checkout@v3
+    - name: Install ESP-IDF v5.3.2
+      run: |
+        git clone -b v5.3.2 --recursive https://github.com/espressif/esp-idf.git esp-idf-v5.3.2
+        export IDF_PATH=$PWD/esp-idf-v5.3.2
+        ./esp-idf-v5.3.2/install.sh
+        . ./esp-idf-v5.3.2/export.sh
     - uses: esphome/build-action@v3.1.0
       id: esphome-build
       with:
