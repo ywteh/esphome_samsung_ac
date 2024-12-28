@@ -195,6 +195,7 @@ def error_code_sensor_schema(message: int):
         unit_of_measurement="",
         accuracy_decimals=0,
         icon="mdi:alert",
+        entity_category="diagnostic",
     )
 
 
