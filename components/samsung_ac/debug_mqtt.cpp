@@ -45,10 +45,21 @@ namespace esphome
 #elif defined(USE_ESP32)
             if (mqtt_client == nullptr)
             {
-                std::string uri = "mqtt://" + (!username.empty() ? username + ":" + password + "@" : "") + host + ":" + std::to_string(port);
-
                 esp_mqtt_client_config_t mqtt_cfg = {};
+
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 4, 0)
+                std::string uri = "mqtt://" + (!username.empty() ? username + ":" + password + "@" : "") + host + ":" + std::to_string(port);
                 mqtt_cfg.uri = uri.c_str();
+#else
+                mqtt_cfg.host = host.c_str();
+                mqtt_cfg.port = port;
+                if (!username.empty())
+                {
+                    mqtt_cfg.username = username.c_str();
+                    mqtt_cfg.password = password.c_str();
+                }
+#endif
+
                 mqtt_client = esp_mqtt_client_init(&mqtt_cfg);
                 esp_mqtt_client_start(mqtt_client);
             }

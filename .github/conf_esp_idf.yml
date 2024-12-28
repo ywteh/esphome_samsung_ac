@@ -5,7 +5,7 @@ esp32:
   board: m5stack-atom
   framework:
     type: esp-idf
-    version: v5.1.5
+    version: latest
 
 external_components:
   - source:
