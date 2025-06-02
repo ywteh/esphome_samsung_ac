@@ -26,19 +26,21 @@ jobs:
     runs-on: ubuntu-latest     
     steps:
     - uses: actions/checkout@v3
-    - uses: esphome/build-action@v4
+    - uses: esphome/build-action@v3.1.0
       id: esphome-build
       with:
         yaml_file: .github/conf_arduino.yml
+        cache: false
   
   framework-espidf:
     runs-on: ubuntu-latest     
     steps:
     - uses: actions/checkout@v3
-    - uses: esphome/build-action@v4
+    - uses: esphome/build-action@v3.1.0
       id: esphome-build
       with:
         yaml_file: .github/conf_esp_idf.yml
+        cache: false
 
   #tests:
   #  runs-on: ubuntu-latest     
@@ -50,3 +52,4 @@ jobs:
   #    run: sudo chmod +x test/*.sh
   #  - name: runtest
   #    run: sudo test/test.sh
+      
