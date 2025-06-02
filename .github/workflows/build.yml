@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest     
     steps:
     - uses: actions/checkout@v3
-    - uses: esphome/build-action@v3.1.0
+    - uses: esphome/build-action@v4
       id: esphome-build
       with:
         yaml_file: .github/conf_arduino.yml
@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest     
     steps:
     - uses: actions/checkout@v3
-    - uses: esphome/build-action@v3.1.0
+    - uses: esphome/build-action@v4
       id: esphome-build
       with:
         yaml_file: .github/conf_esp_idf.yml
@@ -50,4 +50,3 @@ jobs:
   #    run: sudo chmod +x test/*.sh
   #  - name: runtest
   #    run: sudo test/test.sh
-      
