@@ -46,13 +46,11 @@ SELECT_WATER_HEATER_MODE_SCHEMA = select.select_schema(
     Samsung_AC_Water_Heater_Mode_Select
 )
 
-NUMBER_SCHEMA = number.NUMBER_SCHEMA.extend(
+NUMBER_SCHEMA = number.number_schema(Samsung_AC_Number).extend(
     {cv.GenerateID(): cv.declare_id(Samsung_AC_Number)}
 )
 
-CLIMATE_SCHEMA = climate.CLIMATE_SCHEMA.extend(
-    {cv.GenerateID(): cv.declare_id(Samsung_AC_Climate)}
-)
+CLIMATE_SCHEMA = climate.climate_schema(Samsung_AC_Climate)
 
 CONF_DEVICE_ID = "samsung_ac_device_id"
 CONF_DEVICE_ADDRESS = "address"
@@ -143,29 +141,34 @@ CUSTOM_SENSOR_SCHEMA = sensor.sensor_schema().extend(
 
 def custom_sensor_schema(
     message: int,
-    unit_of_measurement: str = sensor._UNDEF,
-    icon: str = sensor._UNDEF,
-    accuracy_decimals: int = sensor._UNDEF,
-    device_class: str = sensor._UNDEF,
-    state_class: str = sensor._UNDEF,
-    entity_category: str = sensor._UNDEF,
+    unit_of_measurement=None,
+    icon=None,
+    accuracy_decimals=None,
+    device_class=None,
+    state_class=None,
+    entity_category=None,
     raw_filters=[],
 ):
-    return sensor.sensor_schema(
-        unit_of_measurement=unit_of_measurement,
-        icon=icon,
-        accuracy_decimals=accuracy_decimals,
-        device_class=device_class,
-        state_class=state_class,
-        entity_category=entity_category,
-    ).extend(
-        {
-            cv.Optional(CONF_DEVICE_CUSTOM_MESSAGE, default=message): cv.hex_int,
-            cv.Optional(
-                CONF_DEVICE_CUSTOM_RAW_FILTERS, default=raw_filters
-            ): sensor.validate_filters,
-        }
-    )
+    schema = sensor.sensor_schema()
+    if unit_of_measurement is not None:
+        schema = schema.extend({cv.Optional(CONF_UNIT_OF_MEASUREMENT): cv.string})
+    if icon is not None:
+        schema = schema.extend({cv.Optional("icon"): cv.icon})
+    if accuracy_decimals is not None:
+        schema = schema.extend({cv.Optional("accuracy_decimals"): cv.positive_int})
+    if device_class is not None:
+        schema = schema.extend({cv.Optional(CONF_DEVICE_CLASS): cv.string})
+    if state_class is not None:
+        schema = schema.extend({cv.Optional("state_class"): cv.string})
+    if entity_category is not None:
+        schema = schema.extend({cv.Optional("entity_category"): cv.string})
+
+    schema = schema.extend({
+        cv.Optional(CONF_DEVICE_CUSTOM_MESSAGE, default=message): cv.hex_int,
+        cv.Optional(CONF_DEVICE_CUSTOM_RAW_FILTERS, default=raw_filters): sensor.validate_filters,
+    })
+
+    return schema
 
 
 def temperature_sensor_schema(message: int):
