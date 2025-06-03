@@ -19,8 +19,11 @@ from esphome.const import (
     CONF_UNIT_OF_MEASUREMENT,
     CONF_DEVICE_CLASS,
     CONF_FILTERS,
+    CONF_FLOW_CONTROL_PIN,
 )
 from esphome.core import CORE, Lambda
+from esphome.cpp_helpers import gpio_pin_expression
+from esphome import pins
 
 CODEOWNERS = ["matthias882", "lanwin", "omerfaruk-aran"]
 DEPENDENCIES = ["uart"]
@@ -329,6 +332,7 @@ CONFIG_SCHEMA = (
         {
             cv.GenerateID(): cv.declare_id(Samsung_AC),
             # cv.Optional(CONF_PAUSE, default=False): cv.boolean,
+            cv.Optional(CONF_FLOW_CONTROL_PIN): pins.gpio_output_pin_schema,
             cv.Optional(CONF_DEBUG_MQTT_HOST, default=""): cv.string,
             cv.Optional(CONF_DEBUG_MQTT_PORT, default=1883): cv.int_,
             cv.Optional(CONF_DEBUG_MQTT_USERNAME, default=""): cv.string,
@@ -352,6 +356,10 @@ async def to_code(config):
         cg.add_library("heman/AsyncMqttClient-esphome", "2.0.0")
 
     var = cg.new_Pvariable(config[CONF_ID])
+    if CONF_FLOW_CONTROL_PIN in config:
+        pin = await gpio_pin_expression(config[CONF_FLOW_CONTROL_PIN])
+        cg.add(var.set_flow_control_pin(pin))
+
     for device_index, device in enumerate(config[CONF_DEVICES]):
         var_dev = cg.new_Pvariable(
             device[CONF_DEVICE_ID], device[CONF_DEVICE_ADDRESS], var
