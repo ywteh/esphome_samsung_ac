@@ -2,6 +2,8 @@ esphome:
   name: arduino
   platformio_options:
     platform: espressif32@6.2.1
+    platform_packages:
+      - framework-arduinoespressif32@3.20006.220418
   
 esp32:
   board: m5stack-atom
