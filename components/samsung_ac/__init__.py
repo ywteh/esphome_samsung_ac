@@ -286,7 +286,7 @@ DEVICE_SCHEMA = cv.Schema(
         cv.Optional(CONF_DEVICE_WATER_IN_TEMPERATURE): temperature_sensor_schema(0x4236),
         cv.Optional(CONF_DEVICE_WATER_OUT_TEMPERATURE): temperature_sensor_schema(0x4238),
         cv.Optional(CONF_DEVICE_FLOW): flow_sensor_schema(0x42e9),
-        # cv.Optional(CONF_DEVICE_ENERGY_PRODUCED): energy_sensor_schema(0x4427),
+        cv.Optional(CONF_DEVICE_ENERGY_PRODUCED): energy_sensor_schema(0x4427),
         cv.Optional(
             CONF_DEVICE_OUT_CONTROL_WATTMETER_ALL_UNIT_ACCUM
         ): sensor.sensor_schema(
@@ -345,6 +345,7 @@ CUSTOM_SENSOR_KEYS = [
     CONF_DEVICE_WATER_IN_TEMPERATURE,
     CONF_DEVICE_WATER_OUT_TEMPERATURE,
     CONF_DEVICE_FLOW,
+    CONF_DEVICE_ENERGY_PRODUCED,
 ]
 
 CONF_DEVICES = "devices"
