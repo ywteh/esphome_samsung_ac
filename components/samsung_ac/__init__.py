@@ -11,11 +11,14 @@ from esphome.const import (
     DEVICE_CLASS_HUMIDITY,
     DEVICE_CLASS_VOLTAGE,
     DEVICE_CLASS_CURRENT,
+    DEVICE_CLASS_VOLUME_FLOW_RATE,
     UNIT_CELSIUS,
     UNIT_PERCENT,
     UNIT_WATT,
     UNIT_VOLT,
     UNIT_AMPERE,
+    UNIT_KILOWATT,
+    UNIT_KILOWATT_HOURS,
     CONF_UNIT_OF_MEASUREMENT,
     CONF_DEVICE_CLASS,
     CONF_FILTERS,
@@ -66,6 +69,9 @@ CONF_DEVICE_INDOOR_EVA_IN_TEMPERATURE = "indoor_eva_in_temperature"
 CONF_DEVICE_INDOOR_EVA_OUT_TEMPERATURE = "indoor_eva_out_temperature"
 CONF_DEVICE_WATER_TEMPERATURE = "water_temperature"
 CONF_DEVICE_WATER_TARGET_TEMPERATURE = "water_target_temperature"
+CONF_DEVICE_WATER_IN_TEMPERATURE = "water_in_temperature"
+CONF_DEVICE_WATER_OUT_TEMPERATURE = "water_out_temperature"
+CONF_DEVICE_FLOW = "flow"
 CONF_DEVICE_POWER = "power"
 CONF_DEVICE_AUTOMATIC_CLEANING = "automatic_cleaning"
 CONF_DEVICE_WATER_HEATER_POWER = "water_heater_power"
@@ -81,7 +87,7 @@ CONF_DEVICE_OUT_CONTROL_WATTMETER_ALL_UNIT_ACCUM = "outdoor_instantaneous_power"
 CONF_DEVICE_OUT_CONTROL_WATTMETER_1W_1MIN_SUM = "outdoor_cumulative_energy"
 CONF_DEVICE_OUT_SENSOR_CT1 = "outdoor_current"
 CONF_DEVICE_OUT_SENSOR_VOLTAGE = "outdoor_voltage"
-
+CONF_DEVICE_ENERGY_PRODUCED = "energy_produced"
 
 CONF_CAPABILITIES = "capabilities"
 CONF_CAPABILITIES_HORIZONTAL_SWING = "horizontal_swing"
@@ -91,6 +97,8 @@ CONF_PRESETS = "presets"
 CONF_PRESET_NAME = "name"
 CONF_PRESET_ENABLED = "enabled"
 CONF_PRESET_VALUE = "value"
+
+UNIT_LITRE_MINUTE = "L/min"
 
 
 def preset_entry(name: str, value: int, displayName: str):
@@ -188,6 +196,33 @@ def humidity_sensor_schema(message: int):
     )
 
 
+def flow_sensor_schema(message: int):
+    return custom_sensor_schema( 
+        message=message,
+        unit_of_measurement=UNIT_LITRE_MINUTE,
+        accuracy_decimals=1,
+        device_class=DEVICE_CLASS_VOLUME_FLOW_RATE,
+        state_class=STATE_CLASS_MEASUREMENT,
+        raw_filters=[
+            {"lambda": Lambda("return (int16_t)x;")},
+            {"multiply": 0.1}
+        ],
+    )
+
+
+def energy_sensor_schema(message: int):
+    return custom_sensor_schema(
+        message=message,
+        unit_of_measurement=UNIT_KILOWATT_HOURS,
+        accuracy_decimals=3,
+        device_class=DEVICE_CLASS_ENERGY,
+        state_class=STATE_CLASS_TOTAL_INCREASING,
+        raw_filters=[
+            {"multiply": 0.001}
+        ],
+    )
+
+
 def error_code_sensor_schema(message: int):
     return custom_sensor_schema(
         message=message,
@@ -248,6 +283,10 @@ DEVICE_SCHEMA = cv.Schema(
         # keep CUSTOM_SENSOR_KEYS in sync with these
         cv.Optional(CONF_DEVICE_WATER_TEMPERATURE): temperature_sensor_schema(0x4237),
         cv.Optional(CONF_DEVICE_ROOM_HUMIDITY): humidity_sensor_schema(0x4038),
+        cv.Optional(CONF_DEVICE_WATER_IN_TEMPERATURE): temperature_sensor_schema(0x4236),
+        cv.Optional(CONF_DEVICE_WATER_OUT_TEMPERATURE): temperature_sensor_schema(0x4238),
+        cv.Optional(CONF_DEVICE_FLOW): flow_sensor_schema(0x42e9),
+        # cv.Optional(CONF_DEVICE_ENERGY_PRODUCED): energy_sensor_schema(0x4427),
         cv.Optional(
             CONF_DEVICE_OUT_CONTROL_WATTMETER_ALL_UNIT_ACCUM
         ): sensor.sensor_schema(
@@ -303,6 +342,9 @@ DEVICE_SCHEMA = cv.Schema(
 CUSTOM_SENSOR_KEYS = [
     CONF_DEVICE_WATER_TEMPERATURE,
     CONF_DEVICE_ROOM_HUMIDITY,
+    CONF_DEVICE_WATER_IN_TEMPERATURE,
+    CONF_DEVICE_WATER_OUT_TEMPERATURE,
+    CONF_DEVICE_FLOW,
 ]
 
 CONF_DEVICES = "devices"
